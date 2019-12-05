@@ -1,5 +1,5 @@
 module.exports = {
     jwt: {
-        secretKey: 'secret123'
+        secretKey: process.env.JWT_SECRET_KEY || 'secret123'
     }
 };

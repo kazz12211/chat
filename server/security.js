@@ -9,12 +9,16 @@ function verifyToken(req, res, next) {
     if(token === null) {
         return res.status(401).send('Unauthorized request');
     }
-    const payload = jwt.verify(token, config.jwt.secretKey);
-    if(!payload) {
+    try {
+        const payload = jwt.verify(token, config.jwt.secretKey);
+        if(!payload) {
+            return res.status(401).send('Unauthorized request');
+        }
+        req.userId = payload.subject;
+        next();
+    } catch(err) {
         return res.status(401).send('Unauthorized request');
     }
-    req.userId = payload.subject;
-    next();
 }
 
 module.exports = verifyToken;    

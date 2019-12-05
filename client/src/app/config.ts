@@ -1,3 +1,5 @@
+import { environment } from '../environments/environment'
+
 export const Config = {
-    server: 'http://localhost:3000'
+    server: environment.server
 };

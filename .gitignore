@@ -55,3 +55,7 @@
 /server/Thumbs.db
 .DS_Store
 Thumbs.db
+
+## Database Files
+
+/server/db/chat

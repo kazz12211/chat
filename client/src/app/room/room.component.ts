@@ -25,13 +25,13 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (this.auth.isLoggedIn()) {
       this.chat.getChatRooms().subscribe((result: any[]) => {
         this.rooms = result;
+        this.selectRoom(this.rooms[0]);
         this.connection = this.chat.getMessages().subscribe((message: any) => {
           if (message.roomid === this.selectedRoom.id) {
             console.log(message);
             this.talks.push(message);
           }
         });
-        this.selectRoom(this.rooms[0]);
       });
     }
   }
