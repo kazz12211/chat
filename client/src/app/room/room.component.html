@@ -1,0 +1,58 @@
+<div *ngIf="!auth.isLoggedIn()">
+  <div class="container">
+    <form class="form form-signin">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <div class="form-group">
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" [(ngModel)]="email" required>
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" [(ngModel)]="password" required autocomplete="off">
+      </div>
+      <button (click)="signin()" class="btn btn-primary btn-block">Sign In</button>
+    </form>
+  </div>
+</div>
+<div *ngIf="auth.isLoggedIn()">
+  <nav class="navbar fixed-top navbar-light bg-light flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand" href="#">Socket IO Example</a>
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link link" (click)="signin()" *ngIf="!auth.isLoggedIn()">Sign In</a>
+        <a class="nav-link link" (click)="auth.signout()" *ngIf="auth.isLoggedIn()">Sign Out</a>
+      </li>
+    </ul>
+  </nav>
+  <main role="main" class="flex-shrink-0 mt-2">
+    <div class="container">
+      <h1 class="mt-5">Chat Room</h1>
+      <ul class="nav">
+        <li *ngFor="let room of rooms" class="nav-item">
+          <a [ngClass]="roomNavClass(room)" (click)="selectRoom(room)">{{room.name}}</a>
+        </li>
+      </ul>
+
+      <div *ngIf="selectedRoom">
+        <div class="list-group">
+          <div *ngFor="let talk of talks" class="list-group-item">
+            <p [ngClass]="messageClass(talk)">{{talk.message}}</p>
+            <div class="d-flex w-100 justify-content-between">
+              <small>
+                <span style="color: #888" *ngIf="talk.type=='message'">{{talk.name}}</span>
+              </small>
+              <small>
+                <span style="color: #888">{{talk.timestamp|date}}</span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer mt-auto py-3">
+    <div class="container">
+      <input [(ngModel)]="message" class="col-md-11"/>
+      <button (click)="sendMessage()" class="btn btn-primary col-md-1">Send</button>
+    </div>
+  </footer>
+</div>
